@@ -1,18 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../App';
+import { motion } from 'framer-motion';
 
 const Signup = () => {
   const currentUserState = useContext(AuthContext);
   const navigate = useNavigate();
-
-  // if (currentUserState.currentUser !== null) {
-  //   return (
-  //     <h1 className="text-4xl font-bold text-center text-green-600 mt-8">
-  //       Already Signed In
-  //     </h1>
-  //   );
-  // }
 
   const [formData, setFormData] = useState({
     username: '',
@@ -25,10 +18,7 @@ const Signup = () => {
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData({ ...formData, [name]: value });
   }
 
   function handleSubmit(e) {
@@ -46,15 +36,32 @@ const Signup = () => {
     }
 
     setError('');
-    currentUserState.setCurrentUser({ username:username, email:email, password:password });
-
-    console.log(formData);
+    currentUserState.setCurrentUser({ username, email, password });
+    localStorage.setItem("user", JSON.stringify(userData));
     navigate('/', { replace: true });
   }
 
+  if (currentUserState.currentUser) {
+    return (
+      <motion.h1
+        className="text-3xl font-bold text-center text-green-600 mt-16"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        ✅ Already Signed Up
+      </motion.h1>
+    );
+  }
+
   return (
-    <div className='max-w-md mx-auto p-6 mt-4 bg-red-100 shadow-lg rounded-md'>
+    <motion.div
+      className='max-w-md mx-auto p-6 mt-4 bg-red-100 shadow-lg rounded-md'
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h2 className='text-2xl font-semibold text-center mb-4'>Sign Up</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="username" className="block text-sm font-medium">Username</label>
@@ -109,13 +116,24 @@ const Signup = () => {
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm">{error}</p>
+          <motion.p
+            className="text-red-600 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {error}
+          </motion.p>
         )}
 
         <div>
-          <button type='submit' className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            type='submit'
+            className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
+          >
             Sign Up
-          </button>
+          </motion.button>
         </div>
       </form>
 
@@ -127,7 +145,7 @@ const Signup = () => {
           </Link>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

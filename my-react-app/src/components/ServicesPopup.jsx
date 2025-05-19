@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
 const Card = ({ extension, title, description, moreText }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div
-      className={`w-full md:w-72 bg-white shadow-md rounded-lg p-4 border transition-all duration-300 
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true }}
+      className={`w-full md:w-72 bg-white  shadow-md rounded-lg p-4 border transition-all duration-300 
         ${expanded ? 'scale-105 shadow-xl border-blue-400' : 'hover:shadow-lg'}`}
     >
-      <Link to={`/${extension}`}><button className="text-lg font-semibold mb-2">{title}</button></Link>
+      <Link to={`/${extension}`}>
+        <button className="text-lg font-semibold mb-2">{title}</button>
+      </Link>
       <p className="text-gray-600 text-sm">{description}</p>
 
       {expanded && (
@@ -23,13 +31,19 @@ const Card = ({ extension, title, description, moreText }) => {
       >
         {expanded ? 'Show Less' : 'Know More'}
       </button>
-    </div>
+    </motion.div>
   );
 };
 
 const ServicesPopup = () => {
   return (
-    <div className="flex justify-center p-4">
+    <motion.div
+      className="flex justify-center p-4"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+    >
       <div className="flex flex-col md:flex-row gap-6">
         <Card
           extension="travelpage"
@@ -50,7 +64,7 @@ const ServicesPopup = () => {
           moreText="Become a trusted carrier and deliver goods swiftly across cities or regions."
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

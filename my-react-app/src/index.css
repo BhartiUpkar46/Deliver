@@ -1,3 +1,8 @@
      @tailwind base;
      @tailwind components;
      @tailwind utilities;
+     @layer utilities {
+  .bg-radial-indigo {
+    background-image: radial-gradient(circle at center, #6366f1, #4338ca);
+  }
+}

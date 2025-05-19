@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import { UserDetails } from '../../assets/data';
+import { motion } from 'framer-motion';
 
 const ActualCustomer = () => {
   const [formData, setFormData] = useState({
@@ -23,36 +24,26 @@ const ActualCustomer = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (e.target.type === 'file') {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: files[0],
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: e.target.type === 'file' ? files[0] : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const flag = UserDetails.some(
-        (element) =>
-          element.email === formData.receiver_email &&
-          element.username === formData.receiver_username
+      const isValidReceiver = UserDetails.some(
+        (u) =>
+          u.email === formData.receiver_email &&
+          u.username === formData.receiver_username
       );
 
-      if (flag) {
-        console.log('Valid receiver found.');
-        console.log('Submitted data:', formData);
-
+      if (isValidReceiver) {
         setSuccessMessage('Shipping details submitted successfully!');
-        console.log(formData);
-        // Clear form
+        console.log('Submitted:', formData);
+
         setFormData({
           pickup: '',
           drop: '',
@@ -68,16 +59,15 @@ const ActualCustomer = () => {
         alert('Invalid receiver credentials. Please check the username and email.');
       }
     } catch (error) {
-      console.error('Error during submission:', error);
+      console.error('Submission error:', error);
       alert('Something went wrong. Please try again.');
     }
   };
 
-  // ✅ Automatically hide success message after 3 seconds
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => setSuccessMessage(''), 3000);
-      // return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
     }
   }, [successMessage]);
 
@@ -89,7 +79,12 @@ const ActualCustomer = () => {
   ];
 
   return (
-    <div className="p-10 max-w-4xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="p-10 max-w-4xl mx-auto"
+    >
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Role of The Customer</h1>
       <p className="text-gray-600 mb-4">
         As a customer, you are expected to ensure smooth and secure shipping by following these key responsibilities:
@@ -97,15 +92,25 @@ const ActualCustomer = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         {roleDescriptions.map((desc, index) => (
-          <div key={index} className="bg-white shadow-md p-4 rounded-lg border border-gray-200">
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white shadow-md p-4 rounded-lg border border-gray-200"
+          >
             <h3 className="text-blue-700 font-semibold mb-2">Role {index + 1}</h3>
             <p className="text-gray-600">{desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {!currentUser ? (
-        <div className="space-y-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="space-y-6"
+        >
           <div className="flex flex-col items-center space-y-2">
             <button
               onClick={() => navigate('/login')}
@@ -124,16 +129,25 @@ const ActualCustomer = () => {
             </button>
             <p className="text-sm">Join us now</p>
           </div>
-        </div>
+        </motion.div>
       ) : (
-        <div className="bg-gray-100 p-6 rounded-xl shadow">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-gray-100 p-6 rounded-xl shadow"
+        >
           <h2 className="text-xl font-semibold mb-4 text-gray-800">Add Shipping Details</h2>
 
-          {/* ✅ Success Message */}
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-100 text-green-800 rounded shadow">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mb-4 p-3 bg-green-100 text-green-800 rounded shadow"
+            >
               {successMessage}
-            </div>
+            </motion.div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -180,16 +194,18 @@ const ActualCustomer = () => {
               </div>
             ))}
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
             >
               Submit Shipping Details
-            </button>
+            </motion.button>
           </form>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

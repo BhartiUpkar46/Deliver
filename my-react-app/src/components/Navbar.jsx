@@ -37,7 +37,7 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-6">
           <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">Home</Link>
-          <Link to="/verifytraveldetails" className="text-gray-700 hover:text-blue-600 font-medium">Travelling Customer</Link>
+          <Link to="/addtraveldetails" className="text-gray-700 hover:text-blue-600 font-medium">Travelling Customer</Link>
           <Link to="/actualcustomer" className="text-gray-700 hover:text-blue-600 font-medium">Actual Customer</Link>
           <Link to="/careers" className="text-gray-700 hover:text-blue-600 font-medium">Careers</Link>
 
@@ -86,7 +86,7 @@ const Navbar = () => {
       {isMobileOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2 bg-gray-50 border-t">
           <Link to="/" onClick={toggleMobileMenu} className="block text-gray-700 hover:text-blue-600">Home</Link>
-          <Link to="/verifytraveldetails" onClick={toggleMobileMenu} className="block text-gray-700 hover:text-blue-600">Travelling Customer</Link>
+          <Link to="/addtraveldetails" onClick={toggleMobileMenu} className="block text-gray-700 hover:text-blue-600">Travelling Customer</Link>
           <Link to="/actualcustomer" onClick={toggleMobileMenu} className="block text-gray-700 hover:text-blue-600">Actual Customer</Link>
           <Link to="/careers" onClick={toggleMobileMenu} className="block text-gray-700 hover:text-blue-600">Careers</Link>
 

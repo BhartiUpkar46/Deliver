@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../context/AuthContext';
 import { MyAppContext } from '../context/ContextProvider';
 import PersonalProfile from './PersonalProfile';
 

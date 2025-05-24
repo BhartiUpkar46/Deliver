@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 const AddTravelDetails = () => {
     const Cards = ({ name = "John Doe", review = "Great experience, smooth process!" }) => (
-        <div className="flex flex-col md:flex-row items-start bg-white rounded-lg shadow-md p-4 mb-4 gap-4">
+        <div className="flex flex-col md:flex-row items-start bg-stone-500 rounded-lg shadow-md p-4 mb-4 gap-4">
             <img src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D" alt="user" className="w-12 h-12 rounded-full" />
             <div>
-                <h4 className="font-semibold text-gray-800">{name}</h4>
-                <p className="text-gray-600 text-sm">{review}</p>
+                <h4 className="font-semibold text-black-800">{name}</h4>
+                <p className=" text-sm text-white">{review}</p>
             </div>
         </div>
     );
@@ -54,7 +54,7 @@ const AddTravelDetails = () => {
             {addTravel === false && (
                 <div className="text-center py-4">
                     <button onClick={()=>setAddTravel(true)}
-                        className="bg-gradient-to-r from-slate-300 to-gray-950 text-white px-6 py-3 rounded-lg hover:brightness-110 transition text-lg font-medium"
+                        className="bg-stone-400 text-white px-6 py-3 rounded-lg hover:brightness-110 transition text-lg font-medium"
                     >
                         Verify and Add Travel Details 
                     </button>
@@ -62,7 +62,7 @@ const AddTravelDetails = () => {
             )}
 
             {addTravel === true && (
-                <div className="bg-white rounded-xl shadow-lg p-8">
+                <div className="bg-red-300 m-4 rounded-xl shadow-lg p-8">
                     <h2 className="text-2xl font-bold text-slate-700 text-center mb-6">
                         Travel Details Verification
                     </h2>
@@ -135,7 +135,7 @@ const AddTravelDetails = () => {
                         {message && <p className="text-center text-sm font-medium text-green-600 mt-2">{message}</p>}
 
                         <div className="bg-white rounded-xl shadow-lg p-8">
-                            <h3 className="text-lg font-semibold mb-4">Upload Ticket (Optional)</h3>
+                            <h3 className="text-lg font-semibold mb-4">Upload Ticket </h3>
 
                             <label className="block text-sm font-medium text-gray-700 mb-1">Ticket Image or Vechile Image </label>
                             <input
@@ -147,7 +147,7 @@ const AddTravelDetails = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+                                className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
                             >
                                 Save Data with Us</button>
                         </div>
@@ -156,15 +156,15 @@ const AddTravelDetails = () => {
 
             )}
 
-            { <div className="text-center p-4">
+            { <div className="text-center  p-4">
                 <Link
                     to='/'
-                    className="bg-gradient-to-r to-slate-300 from-gray-950  px-6 py-3 rounded-lg transition text-lg font-medium"
+                    className="bg-stone-500  px-6 py-3 rounded-lg transition text-lg font-medium"
                 >
                     Go TO Home Page
                 </Link>
             </div>}
-            <div className="bg-white rounded-xl shadow-lg p-8 m-10">
+            <div className="bg-stone-400 rounded-xl shadow-lg p-8 m-10">
                 <h2 className="text-2xl font-bold text-slate-700 mb-4">Our Travel Partner Policy</h2>
                 <p className="text-gray-700 text-sm leading-relaxed mb-6">
                     We believe in safe, transparent, and comfortable journeys. Our travel partner policy ensures that each

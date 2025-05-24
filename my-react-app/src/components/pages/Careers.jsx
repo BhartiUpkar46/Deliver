@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../App';
-
+import { AuthContext } from '../context/AuthContext';
 const deliveryPartners = [
   { name: 'Anita Sharma', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
   { name: 'Rahul Mehta', image: 'https://randomuser.me/api/portraits/men/2.jpg' },
@@ -37,10 +36,10 @@ const Careers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 md:px-20 py-12">
+    <div className="min-h-screen px-6 md:px-20 py-12">
       <section className="text-center mb-10">
         <h1 className="text-3xl font-bold text-gray-800 mb-3">Become a Local Shipping Partner</h1>
-        <p className="text-gray-600 max-w-xl mx-auto">
+        <p className="max-w-xl mx-auto text-lg text-slate-800">
           Help us deliver packages on time. Join our local delivery network and earn by delivering goods in your area.
         </p>
       </section>
@@ -83,14 +82,14 @@ const Careers = () => {
           </form>
         </section>
       ) : (
-        <div className="bg-white p-8 max-w-2xl mx-auto rounded-2xl shadow text-center space-y-6">
+        <div className="bg-green-100 p-8 max-w-2xl mx-auto rounded-2xl shadow text-center space-y-6">
           <h2 className="text-2xl font-semibold text-gray-800">Your application is in queue. Please wait!</h2>
-          <p className="text-gray-600">In the meantime, meet some of our amazing local delivery partners:</p>
+          <p className="text-gray-600 ">In the meantime, meet some of our amazing local delivery partners:</p>
         </div>
       )}
           <div className=" mt-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {deliveryPartners.map((partner) => (
-              <div key={partner.name} className="flex flex-col items-center p-4 border rounded-lg shadow">
+              <div key={partner.name} className="bg-stone-400 flex flex-col items-center p-4 border rounded-lg shadow">
                 <img src={partner.image} alt={partner.name} className="h-16 w-16 object-cover rounded-full mb-2" />
                 <p className="text-sm font-medium text-gray-700">{partner.name}</p>
               </div>

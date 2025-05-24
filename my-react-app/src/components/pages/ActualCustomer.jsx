@@ -1,10 +1,22 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { UserDetails } from '../../assets/data';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+
+const inputVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.3, ease: 'easeOut' },
+  }),
+};
 
 const ActualCustomer = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
   const [formData, setFormData] = useState({
     pickup: '',
     drop: '',
@@ -78,6 +90,18 @@ const ActualCustomer = () => {
     'Confirm item receipt on time.',
   ];
 
+  const formFields = [
+    ['pickup', 'Pickup Location'],
+    ['drop', 'Drop Location'],
+    ['st_date', 'Start Date'],
+    ['en_date', 'End Date'],
+    ['product_weight', 'Product Weight (in kg)'],
+    ['product_value', 'Product Value'],
+    ['product_image', 'Product Image'],
+    ['receiver_username', 'Receiver Username'],
+    ['receiver_email', 'Receiver Email'],
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -113,7 +137,7 @@ const ActualCustomer = () => {
         >
           <div className="flex flex-col items-center space-y-2">
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/login', { state: { from: currentPath } })}
               className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
               Login
@@ -131,82 +155,85 @@ const ActualCustomer = () => {
           </div>
         </motion.div>
       ) : (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gray-100 p-6 rounded-xl shadow"
-        >
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Add Shipping Details</h2>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key="form"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="bg-gray-100 p-6 rounded-xl shadow"
+          >
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Add Shipping Details</h2>
 
-          {successMessage && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="mb-4 p-3 bg-green-100 text-green-800 rounded shadow"
-            >
-              {successMessage}
-            </motion.div>
-          )}
+            <AnimatePresence>
+              {successMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mb-4 p-3 bg-green-100 text-green-800 rounded shadow"
+                >
+                  {successMessage}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {[
-              ['pickup', 'Pickup Location'],
-              ['drop', 'Drop Location'],
-              ['st_date', 'Start Date'],
-              ['en_date', 'End Date'],
-              ['product_weight', 'Product Weight (in kg)'],
-              ['product_value', 'Product Value'],
-              ['product_image', 'Product Image'],
-              ['receiver_username', 'Receiver Username'],
-              ['receiver_email', 'Receiver Email'],
-            ].map(([name, label]) => (
-              <div key={name}>
-                <label htmlFor={name} className="block text-sm font-medium mb-1 text-gray-700">
-                  {label}
-                </label>
-                <input
-                  type={
-                    name.includes('date')
-                      ? 'date'
-                      : name.includes('email')
-                      ? 'email'
-                      : name.includes('image')
-                      ? 'file'
-                      : name.includes('value') || name.includes('weight')
-                      ? 'number'
-                      : 'text'
-                  }
-                  id={name}
-                  name={name}
-                  onChange={handleChange}
-                  {...(name !== 'product_image' && {
-                    value: formData[name],
-                  })}
-                  className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring focus:ring-blue-200 outline-none"
-                  required
-                  {...((name === 'product_weight' || name === 'product_value') && {
-                    min: 0,
-                    step: 0.1,
-                  })}
-                />
-              </div>
-            ))}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {formFields.map(([name, label], index) => (
+                <motion.div
+                  key={name}
+                  custom={index}
+                  variants={inputVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <label htmlFor={name} className="block text-sm font-medium mb-1 text-gray-700">
+                    {label}
+                  </label>
+                  <input
+                    type={
+                      name.includes('date')
+                        ? 'date'
+                        : name.includes('email')
+                        ? 'email'
+                        : name.includes('image')
+                        ? 'file'
+                        : name.includes('value') || name.includes('weight')
+                        ? 'number'
+                        : 'text'
+                    }
+                    id={name}
+                    name={name}
+                    onChange={handleChange}
+                    {...(name !== 'product_image' && {
+                      value: formData[name],
+                    })}
+                    className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring focus:ring-blue-200 outline-none"
+                    required
+                    {...((name === 'product_weight' || name === 'product_value') && {
+                      min: 0,
+                      step: 0.1,
+                    })}
+                  />
+                </motion.div>
+              ))}
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-            >
-              Submit Shipping Details
-            </motion.button>
-          </form>
-        </motion.div>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              >
+                Submit Shipping Details
+              </motion.button>
+            </form>
+          </motion.div>
+        </AnimatePresence>
       )}
     </motion.div>
   );
 };
 
 export default ActualCustomer;
+

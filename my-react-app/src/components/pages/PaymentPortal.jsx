@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../context/AuthContext';
 
 const PaymentPortal = () => {
   const currentUserState = useContext(AuthContext);
@@ -76,7 +76,7 @@ const PaymentPortal = () => {
           <div className="text-center">
             <p className="text-green-600 font-semibold text-lg mb-4">✅ Payment Successful!</p>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/',{replace:true})}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
               Go to Home

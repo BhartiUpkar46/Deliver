@@ -1,3 +1,47 @@
+import Offer1 from './Offer1.png'
+import Offer2 from './Offer2.png'
+import Offer3 from './Offer3.png'
+import Offer4 from './Offer4.png'
+import Offer5 from './Offer5.png'
+import Offer6 from './Offer6.png'
+export const Offers = [
+  {
+    image: Offer1,
+    title: "50% Off on Electronics",
+    description: "Get 50% off on all electronic items. Limited stock available!",
+    endDate: "2025-06-10"
+  },
+  {
+    image: Offer2,
+    title: "Buy 1 Get 1 Free",
+    description: "Enjoy our BOGO offer on selected clothing and accessories.",
+    endDate: "2025-06-15"
+  },
+  {
+    image: Offer3,
+    title: "Summer Special Sale",
+    description: "Up to 70% off on summer wear for men, women, and kids.",
+    endDate: "2025-06-20"
+  },
+  {
+    image: Offer4,
+    title: "Mega Furniture Fest",
+    description: "Flat 40% off on premium furniture. Redesign your home today!",
+    endDate: "2025-06-18"
+  },
+  {
+    image: Offer5,
+    title: "Grocery Bonanza",
+    description: "Buy groceries worth ₹999 and get ₹200 cashback.",
+    endDate: "2025-06-25"
+  },
+  {
+    image: Offer6,
+    title: "Travel Now, Pay Later",
+    description: "Book flights with no-cost EMI and extra 15% off on hotels.",
+    endDate: "2025-06-30"
+  }
+];
 
 const Bookings = [
   {

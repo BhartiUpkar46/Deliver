@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Bookings } from '../../assets/data.js';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../App.jsx';
+import { AuthContext } from '../context/AuthContext.jsx';
 import { MyAppContext } from '../context/ContextProvider.jsx';
-
+import { useLocation } from 'react-router-dom';
 const TravelPage = () => {
-  
+  const location=useLocation();
   const navigate = useNavigate();
   const currentUserState = useContext(AuthContext);
  
@@ -22,13 +22,14 @@ const TravelPage = () => {
     email: ''
   });
   
-  
+  const currentPath=location.pathname;
   function handleAccept(data) {
     if (!currentUserState.currentUser) {
-      navigate('/login');
+      navigate('/login',{state:{from:currentPath}});
+
       return;
     }
-    console.log('sjskbs,')
+    
     navigate('verifytraveldetails', {
       state: {
         from:location.pathname,
@@ -61,7 +62,6 @@ const TravelPage = () => {
       pickup: formData.pickup,
       drop: formData.drop,
       date: formData.date,
-      traveller_email: formData.email,
       receiver_email,
       sender_email,
       value_of_good,

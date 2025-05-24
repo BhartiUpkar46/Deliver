@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { AuthContext } from '../../App'
+import { AuthContext } from '../context/AuthContext'
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 const PersonalProfile = () => {

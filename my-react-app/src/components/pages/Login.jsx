@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   const currentUserState = useContext(AuthContext);
   console.log('currUser    ',currentUserState);
   const from = location.state?.from || '/';
-
+  console.log(from)
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +26,8 @@ const Login = () => {
     currentUserState.setCurrentUser({ email, password, username });
     localStorage.setItem('user',JSON.stringify({username,email,password}))
     console.log(currentUserState.currUser)
-    setError('');
+    const rr=location.state?.data||'bb';
+    
     navigate(from, { replace: true });
   };
 

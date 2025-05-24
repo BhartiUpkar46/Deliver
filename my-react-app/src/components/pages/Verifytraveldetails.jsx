@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Bookings } from '../../assets/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../context/AuthContext';
 import { useRef } from 'react';
 const Verifytraveldetails = () => {
   
@@ -13,6 +13,7 @@ const Verifytraveldetails = () => {
     setGotUser(true);
   }
 }, []);
+
   console.log(receivedData,gotUser)
   const[tktUpload,setktUpload]=useState(false);
   console.log(receivedData.length,"aakmanm")
@@ -67,7 +68,7 @@ const Verifytraveldetails = () => {
 
   useEffect(() => {
     if (currentUserState.currentUser == null) {
-      navigate('/login', { replace: true });
+      navigate('/login',{replace: true ,state:{ from:location.pathname}});
     }
   }, []);
 
